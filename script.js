@@ -91,7 +91,7 @@ function create() {
 
   stars.children.iterate(function(child) {
     //  Give each star a slightly different bounce
-    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.2));
   });
 
   bombs = this.physics.add.group();
@@ -119,21 +119,17 @@ function update() {
   }
 
   if (cursors.left.isDown) {
-    player.setVelocityX(-160);
+    player.setVelocityX(-300);
 
     player.anims.play("left", true);
   } else if (cursors.right.isDown) {
-    player.setVelocityX(160);
+    player.setVelocityX(300);
 
     player.anims.play("right", true);
   } else {
     player.setVelocityX(0);
 
     player.anims.play("turn");
-  }
-
-  if (cursors.up.isDown && player.body.touching.down) {
-    player.setVelocityY(-330);
   }
 }
 
@@ -149,17 +145,6 @@ function collectStar(player, star) {
     stars.children.iterate(function(child) {
       child.enableBody(true, Phaser.Math.Between(50, 750), 0, true, true);
     });
-
-    var x =
-      player.x < 400
-        ? Phaser.Math.Between(400, 800)
-        : Phaser.Math.Between(0, 400);
-
-    var bomb = bombs.create(x, 16, "bomb");
-    bomb.setBounce(1);
-    bomb.setCollideWorldBounds(true);
-    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-    bomb.allowGravity = false;
   }
 }
 
